@@ -7,14 +7,10 @@ describe('App Test', () => {
     const { container } = render(<App />);
     expect(container.querySelector('.collapsible-menu')).not.toBeNull();
   });
-  
+
   it('within the collapsible container, there should be a search box', () => {
     const { container } = render(<App />);
-    const collapsible_menu = container.querySelector('.collapsible-menu') as HTMLDivElement;
-    expect(collapsible_menu.querySelector('.searchbox')).not.toBeNull();
-  })
-  
-  it('when enter is pressed in the searchbox, it should console log the value.', () => {
-  
-  })
-})
+    const collapsibleMenu = container.querySelector('.collapsible-menu') as HTMLDivElement;
+    expect(collapsibleMenu.querySelector('.searchbox')).not.toBeNull();
+  });
+});
