@@ -25,6 +25,7 @@
         "@typescript-eslint"
     ],
     "rules":  {
+        "no-console": "off",
         "react/jsx-filename-extension": [2, 
             { 
                 "extensions": [

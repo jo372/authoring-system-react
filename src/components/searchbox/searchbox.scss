@@ -1,0 +1,42 @@
+$searchbox-border-color: #eaeaea;
+$searchbox-input-icon-background: #fff;
+$searchbox-button-hover-background: #e3e2e2;
+
+.searchbox {
+  width: 100%;
+  margin-top: 15px;
+  .searchbox__input-wrapper {
+    position: relative;
+    .searchbox__input {
+      display: flex;
+      flex-direction: row;
+      input {
+        display: flex;
+        border: 1px solid $searchbox-border-color;
+        text-indent: 1rem;
+        font-size: .8rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        outline: 0;
+        width: 80%;
+        border-radius: 1.5rem 0rem 0rem 1.5rem;
+        border-right: 0;
+      }
+      button {
+        width: 20%;
+        padding: 0;
+        border: 1px solid $searchbox-border-color;
+        background-color: #fff;
+        cursor: pointer;
+        border-left: 0;
+        border-radius: 0rem 1.5rem 1.5rem 0rem;
+        svg {
+          width: 65%;
+          height: 65%;
+          margin: 0 auto;
+          display: block;
+        }
+      }
+    }
+  }
+}
