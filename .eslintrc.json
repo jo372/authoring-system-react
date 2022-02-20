@@ -36,7 +36,10 @@
                 ] 
             }
         ],
-        "indent": ["error", 2, {"ignoredNodes": ["JSXElement"]}],
+        "indent": ["error", 2, {
+            "ignoredNodes": ["JSXElement"],
+            "SwitchCase": 1
+        }],
         "react/jsx-indent": ["error", 2]
     }
 }
