@@ -1,0 +1,23 @@
+@import '../../sassStyles/mixins';
+
+.navbar__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: 0 auto;
+  flex-direction:column;
+  > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .navbar__wrapper {
+    flex-direction: row;
+    > div {
+      margin: 0;
+    }
+  }
+}
