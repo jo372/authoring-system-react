@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600&display=swap');
 
+$navbar_height: 45px;
+
 *,
 *:before,
 *:after {
@@ -41,6 +43,12 @@ h6 {
 .main__content {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.main__content__wrapper {
+		height: inherit;
+	}
 
 	.main__nav {
 		width: 100%;
@@ -111,6 +119,21 @@ h6 {
 					}
 				}
 			}
+		}
+	}
+
+	.main__preview__container {
+		width: 100%;
+		background-color: #ccc;
+		height: calc(100% - $navbar_height);
+		.main__preview__container__inner {
+			height: 100%;
+			width: 100%;
+			padding-left: 10px;
+			padding-right: 10px;
+			background-color: #fff;
+			margin: 0 auto;
+			transition: width .2s ease-in-out;
 		}
 	}
 }
