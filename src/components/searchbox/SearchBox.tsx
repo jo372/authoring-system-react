@@ -14,20 +14,16 @@ export default function SearchBox(props: SearchBoxProps) {
     e.preventDefault();
 
     const target = (e.target as HTMLFormElement);
-    const input = target.querySelector('input');
-
+    const input = target.querySelector('input') as HTMLInputElement;
+    const value = input.value.trim();
     const clearInput = () => {
-      if (input) {
-        input.value = '';
-      }
+      input.value = '';
     };
 
-    if (input) {
-      const value = (input as HTMLInputElement).value.trim();
-      if (onSearch && value !== '') {
-        onSearch(value);
-        clearInput();
-      }
+    clearInput();
+
+    if (value !== '' && onSearch) {
+      onSearch(value);
     }
   };
 

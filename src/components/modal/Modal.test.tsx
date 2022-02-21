@@ -33,7 +33,7 @@ describe('Modal', () => {
     const { container } = render(<Modal isHidden={false} />);
     fireEvent.keyDown(container.querySelector('.modal__overlay') as HTMLDivElement, { key: 'Enter' });
     expect(container.querySelector('.modal')).toHaveClass('hidden');
-  })
+  });
   it('when a onAccept function is provided it should hide the modal and call the onAccept method', () => {
     const onAccept = jest.fn();
     const { container } = render(<Modal isHidden={false} onAccept={onAccept} />);
@@ -44,16 +44,16 @@ describe('Modal', () => {
     const { container } = render(<Modal isHidden={false} />);
     fireEvent.click(container.querySelector('.modal__footer-button.primary') as HTMLButtonElement);
     expect(container.querySelector('.modal')).toHaveClass('hidden');
-  })
+  });
   it('when a onDeny funtion is not provided and modal__footer secondary is pressed, it should hide the modal by default', () => {
     const { container } = render(<Modal isHidden={false} />);
     fireEvent.click(container.querySelector('.modal__footer-button.secondary') as HTMLButtonElement);
     expect(container.querySelector('.modal')).toHaveClass('hidden');
-  })
+  });
   it('when onDeny function is provide and modal__footer-button secondary is clicked it should call the onDeny function', () => {
     const onDeny = jest.fn();
     const { container } = render(<Modal isHidden={false} onDeny={onDeny} />);
     fireEvent.click(container.querySelector('.modal__footer-button.secondary') as HTMLButtonElement);
     expect(onDeny).toHaveBeenCalled();
-  })
+  });
 });

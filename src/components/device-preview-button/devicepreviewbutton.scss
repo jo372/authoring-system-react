@@ -1,0 +1,15 @@
+.device__preview-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #eaeaea;
+  transition: .2s;
+  margin-left: 5px;
+  cursor: pointer;
+  &.active {
+    background-color: #ccc;
+  }
+  &:hover:not(.active) {
+    background-color: #dbdbdb;
+  }
+}
