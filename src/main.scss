@@ -2,7 +2,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600&display=swap');
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
 	box-sizing: inherit;
 }
 
@@ -10,20 +12,125 @@ html {
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	height: 100%;
 	font-family: 'Poppins', sans-serif;
 	word-break: break-all;
+	background-color: #f5f5f5;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-weight: normal;
 }
 
 #root {
 	width: 100%;
 	height: 100%;
+	display: flex;
+}
+
+.main__content {
+	width: 100%;
+	height: 100%;
+
+	.main__nav {
+		width: 100%;
+		background-color: #f5f5f5;
+		border-bottom: 1px solid #eaeaea;
+
+		.navbar__wrapper {
+			.main__nav__page-details {
+				.main__nav__page-name {
+					margin: 0;
+					padding: 0;
+				}
+			}
+			.main__nav__views {
+				.main__nav__view__listing {
+					display: flex;
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					.main__nav__view__listed-item {
+						transition: .2s;
+						-ms-user-select: none;
+						-moz-user-select: none;
+						-webkit-user-select: none;
+						-webkit-touch-callout: none;
+						-khtml-user-select: none;
+						user-select: none;
+						padding-top: 10px;
+						padding-bottom: 10px;
+						position: relative;
+						margin-left: 2px;
+						&.active {
+							a {
+								&:before {
+									right: 0;
+ 									background-color: #4850b5;
+								}
+							}
+						}
+						&:not(.active) {
+							&:hover {
+								a {
+									&:before {
+										right: 0;
+										animation: .3s fadeIn;
+									}
+								}
+							}
+						}
+						a {
+							color: inherit;
+							display: inline;
+							padding: 10px;
+							text-decoration: none;
+							font-size: .9rem;
+							font-weight: bold;
+							&:before {
+								content: '';
+								position: absolute;
+								left: 0;
+								height: 3px;
+								bottom: -1px;
+								right: 100%;
+								transition: .2s;
+								background-color: #7e88ff;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
 }
