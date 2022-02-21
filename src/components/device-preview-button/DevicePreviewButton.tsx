@@ -3,7 +3,7 @@ import { AiOutlineDesktop, AiOutlineTablet } from 'react-icons/ai';
 import { BsPhone } from 'react-icons/bs';
 import './devicepreviewbutton.scss';
 
-type PreviewDeviceTypes = 'desktop' | 'tablet' | 'mobile';
+export type PreviewDeviceTypes = 'desktop' | 'tablet' | 'mobile';
 
 interface DevicePreviewButtonProps {
   deviceType?: PreviewDeviceTypes;
