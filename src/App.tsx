@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DevicePreviewButton from './components/device-preview-button/DevicePreviewButton';
+import DevicePreviewButton, { PreviewDeviceTypes } from './components/device-preview-button/DevicePreviewButton';
 import CollapisbleMenu from './components/menus/collapsible_menu/CollapsibleMenu';
 import Modal from './components/modal/Modal';
 import Navbar from './components/navbar/Navbar';
@@ -8,6 +8,12 @@ import Text from './components/text/Text';
 
 function App() {
   const [currentPreviewingDevice, setCurrentPreviewDevice] = useState<HTMLElement | null>(null);
+
+  const previewDevices : Record<PreviewDeviceTypes, string> = {
+    desktop: '100%',
+    tablet: '768px',
+    mobile: '375px',
+  };
 
   const onDevicePreviewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (currentPreviewingDevice) {
@@ -18,6 +24,9 @@ function App() {
     target.classList.add('active');
 
     setCurrentPreviewDevice(target);
+
+    const previewWindow = document.getElementById('preview-window') as HTMLDivElement;
+    previewWindow.style.maxWidth = previewDevices[target.getAttribute('data-type') as PreviewDeviceTypes];
   };
 
   useEffect(() => {
@@ -50,6 +59,11 @@ function App() {
               <DevicePreviewButton onClick={onDevicePreviewButtonClick} isActive />
             </div>
           </Navbar>
+          <div className="main__preview__container">
+            <div id="preview-window" className="main__preview__container__inner">
+              <span>Hello World</span>
+            </div>
+          </div>
         </div>
       </div>
       <CollapisbleMenu position="right" closedByDefault>
