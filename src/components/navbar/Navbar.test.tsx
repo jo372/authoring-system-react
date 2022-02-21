@@ -14,9 +14,9 @@ describe('Navbar', () => {
   it('when an id is passed in the navbar should contain the property', () => {
     const { container } = render(<Navbar id="hello" />);
     expect(container.querySelector('#hello')).toBeTruthy();
-  })
+  });
   it('when a className is provided, expect the navbar to contain the css classes', () => {
     const { container } = render(<Navbar className="hello" />);
     expect(container.querySelector('.hello')).toBeTruthy();
-  })
+  });
 });
