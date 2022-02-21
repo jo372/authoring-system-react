@@ -1,4 +1,5 @@
 import React, { HTMLAttributes } from 'react';
+import './navbar.scss';
 
 type CherryPickedPropTypes = 'id' | 'children' | 'className';
 
