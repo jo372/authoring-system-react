@@ -1,5 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import SearchBox from './SearchBox';
 
 describe('SearchBox', () => {
@@ -31,8 +33,8 @@ describe('SearchBox', () => {
     const { container } = render(<SearchBox onSearch={onSearch} />);
     const input = container.querySelector('input') as HTMLInputElement;
 
-    fireEvent.change(input, { target: { value: 'Hello' } });
-    fireEvent.keyDown(input, { key: 'Enter', code: 13 });
+    fireEvent.focus(input);
+    userEvent.type(input, 'Hello{enter}');
     expect(input.value).toBe('');
   });
 });
