@@ -19,10 +19,10 @@ function CollapisbleMenu(props: CollapsibleMenuProps) {
     id, closedByDefault, position, children,
   } = props;
 
-  const [isClosed, setIsClosed] = React.useState(closedByDefault ?? false);
+  const [isClosed, setIsClosed] = React.useState(closedByDefault);
 
   const tabInset = position === 'left' ? <BiChevronRight /> : <BiChevronLeft />;
-  const className = `collapsible-menu${position ? ` ${position}` : ''}${isClosed ? ' closed' : ''}`;
+  const className = `collapsible__menu${position ? ` ${position}` : ''}${isClosed ? ' closed' : ''}`;
 
   const toggleIsClosed = () => {
     setIsClosed(!isClosed);
@@ -30,19 +30,19 @@ function CollapisbleMenu(props: CollapsibleMenuProps) {
 
   const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     const { key } = event;
-    if (key === 'Enter') {
+    if (key === 'Enter' || key === ' ') {
       toggleIsClosed();
     }
   };
 
   return (
     <div id={id} className={className}>
-      <div role="button" className="collapsible-menu__close-tab" onClick={toggleIsClosed} onKeyDown={onKeyDownHandler} tabIndex={0}>
-        <div className="collapsible-menu__close-tab__icon">
+      <div role="button" className="collapsible__menu__close-tab" onClick={toggleIsClosed} onKeyDown={onKeyDownHandler} tabIndex={0}>
+        <div className="collapsible__menu__close-tab__icon">
           {tabInset}
         </div>
       </div>
-      <div className="collapsible-menu__content">
+      <div className="collapsible__menu__content">
         {children}
       </div>
     </div>
