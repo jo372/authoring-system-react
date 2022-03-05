@@ -1,0 +1,59 @@
+.collapsible__list {
+  margin-top: 10px;
+  cursor: pointer;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  .collapsible__list__header {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: .8rem;
+    align-items: center;
+    .collapsible__list__header__icon-wrapper {
+      .collapsible__list__header__icon {
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0;
+        svg {
+          transition: all 0.2s ease-in-out;
+        }
+      }
+    }
+    .collapsible__list__header-title {
+      margin-left: 5px;
+    }
+  }
+  .collapsible__list__body {
+    display: inherit;
+    ul, ol {
+      padding: 0;
+      margin: 0;
+      margin-top: 10px;
+      list-style: none;
+    }
+  }
+  &.closed {
+    &.arrow-up svg {
+      transform: rotate(-180deg);
+    }
+    &.arrow-down svg {
+      transform: rotate(-90deg);
+    }
+    &.arrow-left svg {
+      transform: rotate(-180deg);
+    }
+    &.arrow-right svg {
+      transform: rotate(-90deg);
+    }
+    .collapsible__list__body {
+      display: none;
+    }
+  }
+}
