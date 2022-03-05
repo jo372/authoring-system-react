@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import CollapsibleList from './components/collapsible-list/CollapsibleList';
 import DevicePreviewButton, { PreviewDeviceTypes } from './components/device-preview-button/DevicePreviewButton';
 import CollapisbleMenu from './components/menus/collapsible_menu/CollapsibleMenu';
 import Modal from './components/modal/Modal';
@@ -15,6 +16,11 @@ function App() {
     mobile: '375px',
   };
 
+  const setPreviewWindowToPreviewDevice = (deviceType: PreviewDeviceTypes) => {
+    const previewWindow = document.getElementById('preview-window') as HTMLDivElement;
+    previewWindow.style.maxWidth = previewDevices[deviceType];
+  };
+
   const onDevicePreviewButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (currentPreviewingDevice) {
       currentPreviewingDevice.classList.remove('active');
@@ -24,22 +30,30 @@ function App() {
     target.classList.add('active');
 
     setCurrentPreviewDevice(target);
-
-    const previewWindow = document.getElementById('preview-window') as HTMLDivElement;
-    previewWindow.style.maxWidth = previewDevices[target.getAttribute('data-type') as PreviewDeviceTypes];
+    setPreviewWindowToPreviewDevice(target.dataset.type as PreviewDeviceTypes);
   };
+
+  const createEditCopyDeleteHoverMenu = (text: string) => (
+    <li>
+      { text }
+    </li>
+  );
 
   useEffect(() => {
     const currentDevice = document.querySelector('.device__preview-button.active') as HTMLDivElement;
-    if (currentDevice) {
-      setCurrentPreviewDevice(currentDevice);
-    }
+
+    currentDevice.click();
   }, []);
 
   return (
     <>
       <CollapisbleMenu position="left">
         <SearchBox />
+        <CollapsibleList id="pages-list" className="pages__list" title="Page" isOpen>
+          { createEditCopyDeleteHoverMenu('test') }
+          <li>test 2</li>
+          <li>test 3</li>
+        </CollapsibleList>
       </CollapisbleMenu>
       <div className="main__content">
         <div className="main__content__wrapper">
