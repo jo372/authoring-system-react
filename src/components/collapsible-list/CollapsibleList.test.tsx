@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
-import { wait } from '@testing-library/user-event/dist/utils';
 import CollapsibleList from './CollapsibleList';
 
 describe('CollapsibleList Component', () => {
