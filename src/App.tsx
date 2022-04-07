@@ -29,7 +29,9 @@ function App() {
   useEffect(() => {
     const currentDevice = document.querySelector('.device__preview-button.active') as HTMLDivElement;
 
-    currentDevice && currentDevice.click();
+    if (currentDevice) {
+      currentDevice.click();
+    }
   }, []);
 
   const setPreviewWindowToPreviewDevice = (deviceType: PreviewDeviceTypes) => {
