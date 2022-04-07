@@ -14,17 +14,16 @@ interface PreviewWindowProps {
   maxWidth?: string
 }
 
-export function PreviewWindow(props: PreviewWindowProps) {
-  const {
-    children,
-    className,
-  } = { ...PreviewWindow.defaultProps, ...props };
-
+export function PreviewWindow({
+  children = [],
+  className = '',
+  maxWidth = '100%',
+}: PreviewWindowProps) {
   return (
     <div
       className={className}
       style={{
-        maxWidth: props.maxWidth,
+        maxWidth,
       }}
     >
       { children.length > 0 ? children : <p className="text-center">Add Content, open the right side panel - if closed.</p> }

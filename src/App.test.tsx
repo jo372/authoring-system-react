@@ -23,3 +23,34 @@ describe('App Test', () => {
     expect(currentPreviewDevice.classList.contains('active')).toBe(false);
   });
 });
+
+// const onBlockButtonClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+//   const target = document.getElementById('preview-window') as HTMLDivElement;
+//   const { currentTarget } = event;
+//   const currentTargetType = currentTarget.dataset.type as CreatableElementType;
+
+//   const {
+//     TEXT,
+//     CONTAINER,
+//     IMAGE,
+//     GALLERY,
+//     LIST,
+//     LINK,
+//     YOUTUBE_VIDEO,
+//     FOOTER,
+//     NAVBAR,
+//     BUTTON,
+//   } = CreatableElementType;
+
+//   const addChild = (child: JSX.Element) => {
+//     setChildren([...children, child]);
+//   };
+
+//   switch (currentTargetType) {
+//     case TEXT:
+//       addChild(<Text key={`text-${Date.now()}`} />);
+//       break;
+//     default:
+//       break;
+//   }
+// };

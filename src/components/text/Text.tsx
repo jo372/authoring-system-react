@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-type TextHeadingTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type TextHeadingTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 
 interface TextProps {
   text?: string;
@@ -9,14 +9,12 @@ interface TextProps {
   editable?: boolean;
 }
 
-function Text(props: TextProps) {
-  const {
-    className,
-    heading,
-    text,
-    editable,
-  } = { ...Text.defaultProps, ...props };
-
+export default function Text({
+  text = 'Add Text Here',
+  className = undefined,
+  heading = 'p',
+  editable = false,
+}: TextProps) {
   const [isEditable, setIsEditable] = React.useState<boolean>(editable);
 
   const [textValue, setTextValue] = React.useState<string>(text);
@@ -34,7 +32,9 @@ function Text(props: TextProps) {
   }, []);
 
   useEffect(() => {
-    (textRef && isEditable) && textRef.current?.focus();
+    if (textRef && isEditable) {
+      textRef.current?.focus();
+    }
   }, [textRef, isEditable]);
 
   const onClickHandler = () => {
@@ -51,12 +51,12 @@ function Text(props: TextProps) {
   };
 
   return React.createElement(
-    heading || 'p',
+    heading,
     {
       className,
       onClick: onClickHandler,
       onKeyDown: onEnterKeyDown,
-      contentEditable: isEditable || undefined,
+      contentEditable: isEditable,
       suppressContentEditableWarning: true,
       ref: textRef,
     },
@@ -67,8 +67,6 @@ function Text(props: TextProps) {
 Text.defaultProps = {
   text: 'Add Text Here',
   className: undefined,
-  heading: '',
+  heading: 'p',
   editable: false,
 };
-
-export default Text;
