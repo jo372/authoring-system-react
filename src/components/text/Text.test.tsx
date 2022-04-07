@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Text from './Text';
 
 describe('Text Component', () => {
@@ -50,6 +50,24 @@ describe('Text Component', () => {
     const heading = container.querySelector('p');
 
     expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent(Text.defaultProps.text);
+  });
+  it('when the element is clicked it should become contentEditable', () => {
+    const { container } = render(<Text />);
+    const heading = container.querySelector('p') as HTMLParagraphElement;
+    heading.click();
+
+    expect(heading).toHaveAttribute('contentEditable', 'true');
+  });
+  it('when the element is clicked and the user writes text it should append it to the text element after pressing enter to accept', () => {
+    const { container } = render(<Text />);
+    const heading = container.querySelector('p') as HTMLParagraphElement;
+
+    heading.click();
+    fireEvent.change(heading, {
+      target: { innerHTML: 'Hello' },
+    });
+    fireEvent.keyPress(heading, { key: 'Enter', charCode: 13 });
     expect(heading).toHaveTextContent('Hello');
   });
 });
