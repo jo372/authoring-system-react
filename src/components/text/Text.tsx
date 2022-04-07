@@ -1,42 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 type TextHeadingTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 interface TextProps {
-  children?: React.ReactNode;
+  text?: string;
   className?: string;
   heading?: TextHeadingTypes;
+  editable?: boolean;
 }
 
 function Text(props: TextProps) {
-  const { children, className, heading } = props;
+  const {
+    className,
+    heading,
+    text,
+    editable,
+  } = { ...Text.defaultProps, ...props };
 
-  const getHeading = () => {
-    switch (heading) {
-      case 'h1':
-        return <h1 className={className}>{children}</h1>;
-      case 'h2':
-        return <h2 className={className}>{children}</h2>;
-      case 'h3':
-        return <h3 className={className}>{children}</h3>;
-      case 'h4':
-        return <h4 className={className}>{children}</h4>;
-      case 'h5':
-        return <h5 className={className}>{children}</h5>;
-      case 'h6':
-        return <h6 className={className}>{children}</h6>;
-      default:
-        return <p className={className}>{children}</p>;
+  const [isEditable, setIsEditable] = React.useState<boolean>(editable);
+
+  const [textValue, setTextValue] = React.useState<string>(text);
+
+  const textRef = React.useRef<HTMLParagraphElement | HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const onClickHandler = (event: MouseEvent) => {
+      setIsEditable(event.currentTarget === textRef.current);
+    };
+
+    window.addEventListener('click', onClickHandler);
+
+    return window.removeEventListener('click', onClickHandler);
+  }, []);
+
+  useEffect(() => {
+    (textRef && isEditable) && textRef.current?.focus();
+  }, [textRef, isEditable]);
+
+  const onClickHandler = () => {
+    setIsEditable(true);
+  };
+
+  const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const { currentTarget } = event;
+
+    if (isEditable && event.key === 'Enter') {
+      setTextValue(currentTarget.innerText);
+      setIsEditable(false);
     }
   };
 
-  return getHeading();
+  return React.createElement(
+    heading || 'p',
+    {
+      className,
+      onClick: onClickHandler,
+      onKeyDown: onEnterKeyDown,
+      contentEditable: isEditable || undefined,
+      suppressContentEditableWarning: true,
+      ref: textRef,
+    },
+    textValue,
+  );
 }
 
 Text.defaultProps = {
-  text: '',
+  text: 'Add Text Here',
   className: undefined,
   heading: '',
+  editable: false,
 };
 
 export default Text;
