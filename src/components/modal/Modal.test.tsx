@@ -1,6 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { isIterationStatement } from 'typescript';
 import Modal from './Modal';
 
 describe('Modal', () => {
@@ -60,5 +59,4 @@ describe('Modal', () => {
     const { container } = render(<Modal isHidden={false} />);
     expect(container.querySelector('.modal')).not.toHaveClass('hidden');
   });
-  
 });
