@@ -6,7 +6,9 @@ import ImageUploader from './components/image-uploader/ImageUploader';
 import CollapisbleMenu from './components/menus/collapsible_menu/CollapsibleMenu';
 import Modal from './components/modal/Modal';
 import Navbar from './components/navbar/Navbar';
-import { PreviewDevices, PreviewDeviceTypes, PreviewDeviceWidths, PreviewWindow } from './components/preview-window/PreviewWindow';
+import {
+  PreviewDevices, PreviewDeviceTypes, PreviewDeviceWidths, PreviewWindow,
+} from './components/preview-window/PreviewWindow';
 import SearchBox from './components/searchbox/SearchBox';
 import TextImage from './components/text-image/TextImage';
 import Text from './components/text/Text';
@@ -97,14 +99,19 @@ function App() {
       TEXT_IMAGE,
     } = CreatableElementType;
 
+    let imageRef : React.RefObject<HTMLImageElement> | null = null;
+
+    if (currentTargetType === TEXT_IMAGE) {
+      imageRef = React.createRef<HTMLImageElement>();
+    }
+
     switch (currentTargetType) {
       case TEXT:
         addChild(<Text key={`text-${Date.now()}`} />);
         break;
       case TEXT_IMAGE:
-        const imageRef = React.createRef<HTMLImageElement>();
-        const item = (
-          <TextImage
+        if (imageRef) {
+          addChild(<TextImage
             innerRef={imageRef}
             key={`text-image-${Date.now()}`}
             src="https://via.placeholder.com/800"
@@ -112,9 +119,8 @@ function App() {
               toggleModal();
               setSelectedItem(imageRef);
             }}
-          />
-        );
-        addChild(item);
+          />);
+        }
         break;
       default:
         break;
@@ -167,14 +173,17 @@ function App() {
         onAccept={() => {
           if (selectedItem && selectedItem.current) {
             if (selectedItem.current instanceof HTMLImageElement && currentlySelectedImage) {
-                selectedItem.current.src = currentlySelectedImage;
+              selectedItem.current.src = currentlySelectedImage;
             }
           }
           toggleModal();
         }}
         onDeny={toggleModal}
       >
-        <ImageUploader resetContents={!isModalOpen} onImageChange={(img) => setCurrentlySelectedImage(img)} />
+        <ImageUploader
+          resetContents={!isModalOpen}
+          onImageChange={(img) => setCurrentlySelectedImage(img)}
+        />
       </Modal>
     </>
   );
