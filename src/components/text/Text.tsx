@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
+import useOutsideAlerter from '../../hoc/useOutsideAlterer/useOutsideAlerter';
 
 type TextHeadingTypes = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 
-interface TextProps {
+export interface TextProps {
   text?: string;
   className?: string;
   heading?: TextHeadingTypes;
   editable?: boolean;
 }
 
-export default function Text({
+function Text({
   text = 'Add Text Here',
   className = undefined,
   heading = 'p',
@@ -21,41 +22,41 @@ export default function Text({
 
   const textRef = React.useRef<HTMLParagraphElement | HTMLHeadingElement>(null);
 
-  useEffect(() => {
-    const onClickHandler = (event: MouseEvent) => {
-      setIsEditable(event.currentTarget === textRef.current);
-    };
-
-    window.addEventListener('click', onClickHandler);
-
-    return window.removeEventListener('click', onClickHandler);
-  }, []);
-
-  useEffect(() => {
-    if (textRef && isEditable) {
-      textRef.current?.focus();
-    }
-  }, [textRef, isEditable]);
-
   const onClickHandler = () => {
     setIsEditable(true);
   };
 
-  const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    const { currentTarget } = event;
-
-    if (isEditable && event.key === 'Enter') {
-      setTextValue(currentTarget.innerText);
-      setIsEditable(false);
+  const removeContentEditableAttribute = () => {
+    if (textRef.current) {
+      textRef.current.removeAttribute('contenteditable');
     }
   };
+
+  const onLeaveHandler = () => {
+    if (isEditable && textRef.current) {
+      setTextValue(textRef.current.innerText);
+      setIsEditable(false);
+      removeContentEditableAttribute();
+    }
+  };
+
+  useEffect(() => {
+    if (textRef.current) {
+      if (!isEditable) {
+        removeContentEditableAttribute();
+        return;
+      }
+      textRef.current.focus();
+    }
+  }, [textRef, isEditable]);
+
+  useOutsideAlerter(textRef, onLeaveHandler);
 
   return React.createElement(
     heading,
     {
       className,
       onClick: onClickHandler,
-      onKeyDown: onEnterKeyDown,
       contentEditable: isEditable,
       suppressContentEditableWarning: true,
       ref: textRef,
@@ -70,3 +71,5 @@ Text.defaultProps = {
   heading: 'p',
   editable: false,
 };
+
+export default Text;
