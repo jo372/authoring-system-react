@@ -13,6 +13,7 @@
   position: fixed;
   z-index: 2;
   opacity: 1;
+  overflow: auto;
   .modal__overlay {
     position: fixed;
     top: 0;
@@ -27,13 +28,14 @@
     }
   }
   .modal__wrapper {
-    position: fixed;
+    position: absolute;
     width: calc(100% - (2 * 10px));
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: auto;
+    position: absolute;
+    top: 10%;
+    left: 0; 
+    right: 0;
     max-width: 500px;
-    max-height: 400px;
     background-color: #fbfbfb;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -64,6 +66,11 @@
     .modal__body {
       padding-top: 10px;
       padding-bottom: 10px;
+      img {
+        width:100%;
+        object-fit: cover;
+        object-position: center;
+      }
     }
     .modal__footer {
       border-top: 1px solid #e9ecef;
