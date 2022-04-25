@@ -2,25 +2,43 @@ import React, { useEffect, useState } from 'react';
 import BlockButton from './components/block-button/BlockButton';
 import CollapsibleList from './components/collapsible-list/CollapsibleList';
 import DevicePreviewButton from './components/device-preview-button/DevicePreviewButton';
+import ImageUploader from './components/image-uploader/ImageUploader';
 import CollapisbleMenu from './components/menus/collapsible_menu/CollapsibleMenu';
 import Modal from './components/modal/Modal';
 import Navbar from './components/navbar/Navbar';
 import {
-  PreviewWindow, PreviewDevices, PreviewDeviceTypes, PreviewDeviceWidths,
+  PreviewDevices, PreviewDeviceTypes, PreviewDeviceWidths, PreviewWindow,
 } from './components/preview-window/PreviewWindow';
 import SearchBox from './components/searchbox/SearchBox';
+import TextImage from './components/text-image/TextImage';
 import Text from './components/text/Text';
 import CreatableElementType from './util/CreatableElementType';
 
 function App() {
   const [
+    isModalOpen,
+    setIsModalOpen,
+  ] = useState<boolean>(false);
+
+  const [
     currentPreviewingDevice,
     setCurrentPreviewDevice,
   ] = useState<HTMLElement | null>(null);
+
+  const [
+    currentlySelectedImage,
+    setCurrentlySelectedImage,
+  ] = useState<string | null>(null);
+
+  const [
+    selectedItem,
+    setSelectedItem,
+  ] = useState<React.RefObject<HTMLElement | HTMLImageElement> | null>(null);
   const [
     children,
     setChildren,
   ] = useState<JSX.Element[]>([]);
+
   const [
     previewDeviceMaxWidth,
     setPreviewDeviceMaxWidth,
@@ -35,6 +53,11 @@ function App() {
   }, []);
 
   const setPreviewWindowToPreviewDevice = (deviceType: PreviewDeviceTypes) => {
+    const target = document.getElementById('preview-window') as HTMLDivElement;
+
+    target.classList.remove('desktop', 'tablet', 'mobile');
+    target.classList.add(deviceType);
+
     setPreviewDeviceMaxWidth(PreviewDevices[deviceType]);
   };
 
@@ -58,6 +81,11 @@ function App() {
     </li>
   );
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    setSelectedItem(null);
+  };
+
   const addChild = (child: JSX.Element) => {
     setChildren([...children, child]);
   };
@@ -68,11 +96,31 @@ function App() {
 
     const {
       TEXT,
+      TEXT_IMAGE,
     } = CreatableElementType;
+
+    let imageRef : React.RefObject<HTMLImageElement> | null = null;
+
+    if (currentTargetType === TEXT_IMAGE) {
+      imageRef = React.createRef<HTMLImageElement>();
+    }
 
     switch (currentTargetType) {
       case TEXT:
         addChild(<Text key={`text-${Date.now()}`} />);
+        break;
+      case TEXT_IMAGE:
+        if (imageRef) {
+          addChild(<TextImage
+            innerRef={imageRef}
+            key={`text-image-${Date.now()}`}
+            src="https://via.placeholder.com/800"
+            onClick={() => {
+              toggleModal();
+              setSelectedItem(imageRef);
+            }}
+          />);
+        }
         break;
       default:
         break;
@@ -108,7 +156,7 @@ function App() {
             </div>
           </Navbar>
           <div className="main__preview__container">
-            <PreviewWindow className="main__preview__container__inner" maxWidth={previewDeviceMaxWidth}>
+            <PreviewWindow id="preview-window" className="main__preview__container__inner" maxWidth={previewDeviceMaxWidth}>
               { children }
             </PreviewWindow>
           </div>
@@ -117,18 +165,25 @@ function App() {
       <CollapisbleMenu position="right">
         <p>Block List</p>
         <BlockButton text="Text" type={CreatableElementType.TEXT} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Container" type={CreatableElementType.CONTAINER} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Image" type={CreatableElementType.IMAGE} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Gallery" type={CreatableElementType.GALLERY} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="List" type={CreatableElementType.LIST} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Link" type={CreatableElementType.LINK} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Youtube Video" type={CreatableElementType.YOUTUBE_VIDEO} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Footer" type={CreatableElementType.FOOTER} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Navbar" type={CreatableElementType.NAVBAR} onClick={onBlockButtonClickHandler} />
-        <BlockButton text="Button" type={CreatableElementType.BUTTON} onClick={onBlockButtonClickHandler} />
+        <BlockButton text="Text Image" type={CreatableElementType.TEXT_IMAGE} onClick={onBlockButtonClickHandler} />
       </CollapisbleMenu>
-      <Modal>
-        <h1>Hello World</h1>
+      <Modal
+        title="Upload Image"
+        isHidden={!isModalOpen}
+        onAccept={() => {
+          if (selectedItem && selectedItem.current) {
+            if (selectedItem.current instanceof HTMLImageElement && currentlySelectedImage) {
+              selectedItem.current.src = currentlySelectedImage;
+            }
+          }
+          toggleModal();
+        }}
+        onDeny={toggleModal}
+      >
+        <ImageUploader
+          resetContents={!isModalOpen}
+          onImageChange={(img) => setCurrentlySelectedImage(img)}
+        />
       </Modal>
     </>
   );

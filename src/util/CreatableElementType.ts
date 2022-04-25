@@ -3,7 +3,7 @@ export default class CreatableElementType {
 
   public static readonly CONTAINER = 'container';
 
-  public static readonly IMAGE = 'image';
+  public static readonly TEXT_IMAGE = 'text_image';
 
   public static readonly GALLERY = 'gallery';
 

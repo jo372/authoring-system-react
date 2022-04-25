@@ -12,81 +12,67 @@ interface ModalTextProps {
   denyText?: string;
 }
 
-interface ModalProps extends ModalEventListeners, ModalTextProps {
+export interface ModalProps extends ModalEventListeners, ModalTextProps {
   isHidden?: boolean;
   children?: React.ReactNode;
 }
 
-type DivOrButtonTarget = HTMLDivElement | HTMLButtonElement;
-type MouseAndKeyboardEvent = React.MouseEvent<DivOrButtonTarget, MouseEvent> |
-React.KeyboardEvent<DivOrButtonTarget>;
-
 function Modal(props: ModalProps) {
   const {
-    onAccept,
+    isHidden,
     onDeny,
     title,
+    children,
+    onAccept,
     acceptText,
     denyText,
-    isHidden,
-    children,
   } = props;
 
-  const [isModalHidden, setModalHidden] = React.useState(isHidden);
-
-  const hideModalWindow = (e: MouseAndKeyboardEvent) => {
-    e.preventDefault();
-    setModalHidden(true);
-  };
-
-  const keyboardEventHandler = (e: React.KeyboardEvent<DivOrButtonTarget>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      hideModalWindow(e);
-    }
-  };
+  const hasHiddenCSSSelector = isHidden ? ' hidden' : '';
 
   return (
-    <div className={`modal${isModalHidden ? ' hidden' : ''}`}>
-      <div tabIndex={0} role="button" aria-label="Close Modal Overlay" className="modal__overlay" onClick={hideModalWindow} onKeyDown={keyboardEventHandler} />
+    <div className={`modal${hasHiddenCSSSelector}`}>
+      <div
+        tabIndex={0}
+        role="button"
+        aria-label="Close Modal Overlay"
+        className="modal__overlay"
+        onClick={onDeny}
+        onKeyDown={onDeny}
+      />
       <div className="modal__wrapper">
         <div className="modal__header">
           <div className="modal__header-title">
-            <h3>{ title }</h3>
+            <h3>{title}</h3>
           </div>
           <div className="modal__header-close">
-            <button type="button" className="modal__close-button" onClick={hideModalWindow}>X</button>
+            <button
+              type="button"
+              className="modal__close-button"
+              onClick={onDeny}
+            >
+              X
+            </button>
           </div>
         </div>
-        <div className="modal__body">
-          { children }
-        </div>
+        <div className="modal__body">{children}</div>
         <div className="modal__footer">
           <div className="modal__footer-buttons">
             <button
               type="button"
               className="modal__footer-button primary"
-              onClick={(e: React.MouseEvent<DivOrButtonTarget>) => {
-                hideModalWindow(e);
-                if (onAccept) {
-                  onAccept();
-                }
-              }}
+              onClick={() => onAccept && onAccept()}
               aria-label="Accept"
             >
-              { acceptText }
+              {acceptText}
             </button>
             <button
               type="button"
               className="modal__footer-button secondary"
-              onClick={(e: React.MouseEvent<DivOrButtonTarget>) => {
-                hideModalWindow(e);
-                if (onDeny) {
-                  onDeny();
-                }
-              }}
+              onClick={() => onDeny && onDeny()}
               aria-label="Deny"
             >
-              { denyText }
+              {denyText}
             </button>
           </div>
         </div>
@@ -100,9 +86,9 @@ Modal.defaultProps = {
   title: 'Warning!',
   acceptText: 'Okay',
   denyText: 'Close',
-  onAccept: undefined,
-  onDeny: undefined,
-  children: undefined,
+  onAccept: () => {},
+  onDeny: () => {},
+  children: [],
 };
 
 export default Modal;
