@@ -40,6 +40,7 @@
             "ignoredNodes": ["JSXElement"],
             "SwitchCase": 1
         }],
-        "react/jsx-indent": ["error", 2]
+        "react/jsx-indent": ["error", 2],
+        "react/jsx-props-no-spreading": "off"
     }
 }
