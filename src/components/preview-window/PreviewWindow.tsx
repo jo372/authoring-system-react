@@ -9,24 +9,33 @@ export const PreviewDevices : Record<PreviewDeviceTypes, PreviewDeviceWidths> = 
 };
 
 interface PreviewWindowProps {
-  children?: React.ReactNode[];
+  children?: React.ReactNode;
   className?: string;
-  maxWidth?: string
+  maxWidth?: string;
+  id?: string | undefined;
 }
 
-export function PreviewWindow({
-  children = [],
-  className = '',
-  maxWidth = '100%',
-}: PreviewWindowProps) {
+export function PreviewWindow(props: PreviewWindowProps) {
+  const {
+    children,
+    className,
+    maxWidth,
+    id,
+  } = props;
+
+  const hasClassName = className ? ` ${className}` : '';
+
   return (
     <div
-      className={className}
+      className={`preview-window${hasClassName}`}
+      id={id}
       style={{
         maxWidth,
       }}
     >
-      { children.length > 0 ? children : <p className="text-center">Add Content, open the right side panel - if closed.</p> }
+      {
+        children || <p className="text-center">Add Content, open the right side panel - if closed.</p>
+      }
     </div>
   );
 }
@@ -35,6 +44,7 @@ PreviewWindow.defaultProps = {
   children: [],
   className: '',
   maxWidth: '100%',
+  id: undefined,
 };
 
 export default PreviewWindow;
