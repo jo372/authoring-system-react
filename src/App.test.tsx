@@ -1,6 +1,10 @@
+import { fireEvent, render } from '@testing-library/react';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { configure } from 'enzyme';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import App from './App';
+
+configure({ adapter: new Adapter() });
 
 describe('App Test', () => {
   it('the document should contain a CollapisbleMenu', () => {
@@ -22,35 +26,9 @@ describe('App Test', () => {
     fireEvent.click(anotherPreviewDeviceButton);
     expect(currentPreviewDevice.classList.contains('active')).toBe(false);
   });
+  it('should contain a modal that is hidden by default', () => {
+    const { container } = render(<App />);
+    const modal = container.querySelector('.modal') as HTMLDivElement;
+    expect(modal.classList.contains('hidden')).toBe(true);
+  });
 });
-
-// const onBlockButtonClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-//   const target = document.getElementById('preview-window') as HTMLDivElement;
-//   const { currentTarget } = event;
-//   const currentTargetType = currentTarget.dataset.type as CreatableElementType;
-
-//   const {
-//     TEXT,
-//     CONTAINER,
-//     IMAGE,
-//     GALLERY,
-//     LIST,
-//     LINK,
-//     YOUTUBE_VIDEO,
-//     FOOTER,
-//     NAVBAR,
-//     BUTTON,
-//   } = CreatableElementType;
-
-//   const addChild = (child: JSX.Element) => {
-//     setChildren([...children, child]);
-//   };
-
-//   switch (currentTargetType) {
-//     case TEXT:
-//       addChild(<Text key={`text-${Date.now()}`} />);
-//       break;
-//     default:
-//       break;
-//   }
-// };
