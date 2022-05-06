@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  BiChevronRight,
-  BiChevronLeft,
+  BiChevronLeft, BiChevronRight,
 } from 'react-icons/bi';
 import './collapsiblemenu.scss';
 
@@ -24,6 +23,13 @@ function CollapisbleMenu(props: CollapsibleMenuProps) {
   const tabInset = position === 'left' ? <BiChevronRight /> : <BiChevronLeft />;
   const className = `collapsible__menu${position ? ` ${position}` : ''}${isClosed ? ' closed' : ''}`;
 
+  const ref = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.click();
+    }
+  }, [closedByDefault]);
   const toggleIsClosed = () => {
     setIsClosed(!isClosed);
   };
@@ -37,7 +43,7 @@ function CollapisbleMenu(props: CollapsibleMenuProps) {
 
   return (
     <div id={id} className={className}>
-      <div role="button" className="collapsible__menu__close-tab" onClick={toggleIsClosed} onKeyDown={onKeyDownHandler} tabIndex={0}>
+      <div ref={ref} role="button" className="collapsible__menu__close-tab" onClick={toggleIsClosed} onKeyDown={onKeyDownHandler} tabIndex={0}>
         <div className="collapsible__menu__close-tab__icon">
           {tabInset}
         </div>

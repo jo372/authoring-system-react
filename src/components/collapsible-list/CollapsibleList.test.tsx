@@ -1,38 +1,12 @@
+import { render } from '@testing-library/react';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { configure } from 'enzyme';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
 import CollapsibleList from './CollapsibleList';
 
+configure({ adapter: new Adapter() });
+
 describe('CollapsibleList Component', () => {
-  // 37,41-45,50,57,61-63
-  it('when space or enter key on collapsible__list__header the collapsible list should toggle the closed css selector', async () => {
-    const { container } = render(
-      <CollapsibleList
-        id="collapsible-list"
-        title="Collapsible List"
-        isOpen
-        arrowDirection="down"
-      >
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-      </CollapsibleList>,
-    );
-
-    const collapsibleList = container.querySelector('#collapsible-list') as HTMLDivElement;
-    const collapisbleHeader = container.querySelector('.collapsible__list__header') as HTMLDivElement;
-
-    expect(collapsibleList).toBeInTheDocument();
-    expect(collapisbleHeader).toBeInTheDocument();
-    expect(collapisbleHeader.classList.contains('closed')).toBe(false);
-
-    fireEvent.keyDown(collapisbleHeader, { key: 'Enter', charCode: 13 });
-
-    expect(collapsibleList.classList.contains('closed')).toBe(true);
-
-    fireEvent.keyDown(collapisbleHeader, { key: ' ', charCode: 32 });
-    expect(collapsibleList.classList.contains('closed')).toBe(false);
-  });
-
   it('when CollapsibleList type is ordered it should return an ol', () => {
     const { container } = render(
       <CollapsibleList

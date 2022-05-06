@@ -1,17 +1,19 @@
 import * as React from 'react';
-import WithClickHandler from '../../hoc/withClickHandler/withClickHandler';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 import Image, { ImageProps } from '../image/Image';
 import Text, { TextProps } from '../text/Text';
 import './text-image.scss';
 
 type CherryPickedProps = Pick<TextProps, 'className'> & ImageProps;
 
-interface TextImageProps extends CherryPickedProps {
+export interface TextImageProps extends CherryPickedProps {
   title?: string;
   heading?: string;
   paragraph?: string;
   innerRef?: React.RefObject<HTMLImageElement>;
   className?: string | undefined;
+  children?: React.ReactNode;
+  key?: string;
 }
 
 function TextImage(props: TextImageProps) {
@@ -24,15 +26,25 @@ function TextImage(props: TextImageProps) {
     className,
     onClick,
     innerRef,
+    children,
+    key,
   } = props;
 
   const hasClassName = className ? ` ${className}` : '';
 
   return (
-    <div className={`text-image-wrapper${hasClassName}`}>
+    <div className={`text-image-wrapper${hasClassName}`} key={key}>
       <div className="text-image-container">
         <div className="text-image--image">
           <Image innerRef={innerRef} src={src} alt={alt} className={className} onClick={onClick} />
+          <div className="text-image--hover-overlay">
+            <div className="text-image--hover-overlay-content">
+              <div className="text-image--hover-overlay-icon">
+                <AiOutlineCloudUpload />
+              </div>
+              <Text editable={false} align="center" text="Click to Change Image" />
+            </div>
+          </div>
         </div>
         <div className="text-image--text">
           <div className="text-image--text-container">
@@ -41,6 +53,7 @@ function TextImage(props: TextImageProps) {
             <Text text={paragraph} className="text-image--paragraph" heading="p" />
           </div>
         </div>
+        { children }
       </div>
     </div>
   );
@@ -54,4 +67,4 @@ TextImage.defaultProps = {
   innerRef: undefined,
 };
 
-export default WithClickHandler(TextImage);
+export default TextImage;

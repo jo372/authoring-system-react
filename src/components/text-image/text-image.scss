@@ -1,3 +1,8 @@
+
+.text-image-block {
+  position: relative;
+}
+
 .text-image-wrapper {
   .text-image-container {
     display: flex;
@@ -5,12 +10,42 @@
     .text-image--image {
       width: 100%;
       max-width: inherit;
+      position: relative;
+      cursor: pointer;
+      display: flex;
       img {
         max-width: 100%;
         min-height: auto;
         width: 100%;
         object-fit: cover;
         object-position: top left;
+      }
+      .text-image--hover-overlay {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: 0.2s;
+        color: #fff;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .text-image--hover-overlay-icon {
+          font-size: 2rem;
+          justify-content: center;
+          display: flex;
+        }
+      }
+      &:hover {
+        .text-image--hover-overlay {
+          opacity: 1;
+          visibility: visible;
+        }
       }
     }
     .text-image--text {
@@ -23,22 +58,16 @@
   }
 }
 
-// .desktop, .tablet {
-//   .text-image--image {
-//     img {
-//       min-height: 800px !important;
-//     }
-//   }
-// }
-
 .desktop {
   .text-image--image {
     width: 50% !important;
   }
-  .text-image--title {
-    margin-top: calc(100% / 3);
-  }
   .text-image--text {
     width: 50% !important;
+    padding-left: 10px;
+  }
+
+  .text-image--title {
+    margin-top: 0;
   }
 }

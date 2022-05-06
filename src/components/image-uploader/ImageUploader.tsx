@@ -1,9 +1,12 @@
 import * as React from 'react';
 
+/* eslint-disable */
+
 interface ImageUploaderProps {
   onImageChange: (src: string) => void;
   resetContents?: boolean;
   alt?: string;
+  accept?: string;
 }
 
 export default function ImageUploader(props: ImageUploaderProps) {
@@ -57,4 +60,5 @@ export default function ImageUploader(props: ImageUploaderProps) {
 ImageUploader.defaultProps = {
   resetContents: false,
   alt: '',
+  accept: 'image/*',
 };

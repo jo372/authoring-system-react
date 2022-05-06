@@ -59,4 +59,12 @@ describe('Text Component', () => {
 
     expect(heading).toHaveAttribute('contentEditable', 'true');
   });
+  it('when an onClickHandler is provided it should be called when the element is clicked', () => {
+    const onClickHandler = jest.fn();
+    const { container } = render(<Text onClick={onClickHandler} />);
+    const heading = container.querySelector('p') as HTMLParagraphElement;
+    heading.click();
+
+    expect(onClickHandler).toHaveBeenCalled();
+  });
 });

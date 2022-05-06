@@ -1,7 +1,5 @@
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-
 import SearchBox from './SearchBox';
 
 describe('SearchBox', () => {
@@ -26,15 +24,5 @@ describe('SearchBox', () => {
     fireEvent.change(input, { target: { value: 'Hello' } });
     fireEvent.click(button);
     expect(onSearch).not.toHaveBeenCalled();
-  });
-
-  test('after enter has been pressed the searchbox value should be set to blank', () => {
-    const onSearch = jest.fn();
-    const { container } = render(<SearchBox onSearch={onSearch} />);
-    const input = container.querySelector('input') as HTMLInputElement;
-
-    fireEvent.focus(input);
-    userEvent.type(input, 'Hello{enter}');
-    expect(input.value).toBe('');
   });
 });
