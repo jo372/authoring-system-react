@@ -15,16 +15,26 @@ describe('PreviewWindow Component', () => {
 
     expect(previewWindow).toHaveClass('preview-window');
   });
-  it('when children are provided via props, it should render the children', () => {
+  it('when a maxWidth is provided, it should render the maxWidth', () => {
     const { container } = render(
-      <PreviewWindow>
+      <PreviewWindow maxWidth="100px">
         <p>Hello</p>
       </PreviewWindow>,
     );
 
-    const paragraph = container.querySelector('p');
+    const previewWindow = container.querySelector('.preview-window') as HTMLDivElement;
 
-    expect(paragraph).toBeInTheDocument();
-    expect(paragraph).toHaveTextContent('Hello');
+    expect(previewWindow).toHaveStyle('max-width: 100px');
+  });
+  it('when an id is provided, it should render the id', () => {
+    const { container } = render(
+      <PreviewWindow id="test">
+        <p>Hello</p>
+      </PreviewWindow>,
+    );
+
+    const previewWindow = container.querySelector('.preview-window') as HTMLDivElement;
+
+    expect(previewWindow).toHaveAttribute('id', 'test');
   });
 });

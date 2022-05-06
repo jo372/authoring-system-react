@@ -28,8 +28,21 @@ function DevicePreviewButton({
     }
   };
 
+  const getTitle = () => {
+    switch (deviceType) {
+      case 'desktop':
+        return '100%';
+      case 'tablet':
+        return '768px';
+      case 'mobile':
+        return '375px';
+      default:
+        return '100%';
+    }
+  };
+
   return (
-    <button type="button" data-type={deviceType} className={`device__preview-button${isActive ? ' active' : ''}`} onClick={onClick}>
+    <button title={getTitle()} type="button" data-type={deviceType} className={`device__preview-button${isActive ? ' active' : ''}`} onClick={onClick}>
       { getIcon() }
     </button>
   );

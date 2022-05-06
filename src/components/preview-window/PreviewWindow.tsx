@@ -9,7 +9,7 @@ export const PreviewDevices : Record<PreviewDeviceTypes, PreviewDeviceWidths> = 
 };
 
 interface PreviewWindowProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode | React.ReactNode[];
   className?: string;
   maxWidth?: string;
   id?: string | undefined;
@@ -34,14 +34,16 @@ export function PreviewWindow(props: PreviewWindowProps) {
       }}
     >
       {
-        children || <p className="text-center">Add Content, open the right side panel - if closed.</p>
+        children && Array.isArray(children) && children.length > 0
+          ? children
+          : <p className="text-center">Add Content, open the right side panel - if closed.</p>
       }
     </div>
   );
 }
 
 PreviewWindow.defaultProps = {
-  children: [],
+  children: null,
   className: '',
   maxWidth: '100%',
   id: undefined,

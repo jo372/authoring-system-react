@@ -5,6 +5,8 @@ export default class CreatableElementType {
 
   public static readonly TEXT_IMAGE = 'text_image';
 
+  public static readonly VIDEO_IMAGE = 'video_image';
+
   public static readonly GALLERY = 'gallery';
 
   public static readonly LIST = 'list';
@@ -18,4 +20,8 @@ export default class CreatableElementType {
   public static readonly NAVBAR = 'navbar';
 
   public static readonly BUTTON = 'button';
+
+  public static readonly HEADING = 'heading';
+
+  public static readonly TITLE = 'title';
 }

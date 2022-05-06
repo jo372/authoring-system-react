@@ -25,6 +25,7 @@
         "@typescript-eslint"
     ],
     "rules":  {
+        "no-trailing-spaces": 0,
         "no-console": "off",
         "react/jsx-filename-extension": [2, 
             { 

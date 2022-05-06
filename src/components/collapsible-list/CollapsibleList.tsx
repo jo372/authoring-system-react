@@ -1,9 +1,11 @@
+/* eslint-disable */
+
 import React, { useState } from 'react';
 import {
+  BiChevronDown,
   BiChevronLeft,
   BiChevronRight,
-  BiChevronDown,
-  BiChevronUp,
+  BiChevronUp
 } from 'react-icons/bi';
 import './collapsible-list.scss';
 
@@ -18,17 +20,21 @@ interface CollapisbleMenuProps {
   isOpen?: boolean,
   arrowDirection?: ArrowDirection,
   children?: React.ReactNode,
+  innerRef?: React.ForwardedRef<HTMLDivElement>,
 }
 
-function CollapsibleList({
-  id,
-  className,
-  children,
-  title,
-  type,
-  arrowDirection = 'down',
-  isOpen = true,
-}: CollapisbleMenuProps) {
+function CollapsibleList(props: CollapisbleMenuProps) {
+  const {
+    id,
+    className,
+    children,
+    title,
+    type,
+    arrowDirection = 'down',
+    isOpen,
+    innerRef,
+  } = props;
+
   const [isClosed, setIsClosed] = useState(!isOpen);
 
   const toggleIsClosed = () => {
@@ -59,8 +65,6 @@ function CollapsibleList({
         return <BiChevronLeft data-icon-type="chevron-left" />;
       case 'right':
         return <BiChevronRight data-icon-type="chevron-right" />;
-      default:
-        return <BiChevronDown data-icon-type="chevron-down" />;
     }
   };
 
@@ -80,7 +84,7 @@ function CollapsibleList({
         </div>
       </div>
 
-      <div className="collapsible__list__body">
+      <div ref={innerRef} className="collapsible__list__body">
         { getListType() }
       </div>
     </div>

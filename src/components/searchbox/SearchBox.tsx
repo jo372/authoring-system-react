@@ -16,22 +16,22 @@ export default function SearchBox(props: SearchBoxProps) {
     const target = (e.target as HTMLFormElement);
     const input = target.querySelector('input') as HTMLInputElement;
     const value = input.value.trim();
-    const clearInput = () => {
-      input.value = '';
-    };
 
-    clearInput();
-
-    if (value !== '' && onSearch) {
+    if (onSearch) {
       onSearch(value);
     }
+  };
+
+  const onKeyUpHandler = () => {
+    const button = document.querySelector('button[type="submit"]') as HTMLButtonElement;
+    button.click();
   };
 
   return (
     <div className="searchbox">
       <div className="searchbox__input-wrapper">
         <form className="searchbox__input" onSubmit={onFormSubmit}>
-          <input type="text" placeholder={placeholder} />
+          <input type="text" placeholder={placeholder} onKeyUp={onKeyUpHandler} />
           <button type="submit" className="searchbox__input__icon">
             <BiSearch />
           </button>
