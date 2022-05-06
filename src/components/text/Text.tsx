@@ -34,8 +34,7 @@ function Text({
   const textRef = React.useRef<HTMLElement>(null);
 
   const onClickHandler = (e: 
-    React.MouseEvent<HTMLParagraphElement | HTMLHeadingElement, MouseEvent>
-  ) => {
+  React.MouseEvent<HTMLParagraphElement | HTMLHeadingElement, MouseEvent>) => {
     setIsEditable(true);
     if (onClick) {
       onClick(e);
